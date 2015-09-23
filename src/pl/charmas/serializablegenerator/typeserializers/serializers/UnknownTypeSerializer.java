@@ -28,6 +28,6 @@ public class UnknownTypeSerializer implements TypeSerializer {
 
     @Override
     public String readValue(PsiField field, String in) {
-        return "this." + field.getName() + " = " + in + ".readObject();";
+        return "this." + field.getName() + " = (" + field.getType().getCanonicalText() + ") " + in + ".readObject();";
     }
 }
