@@ -22,6 +22,7 @@ import com.intellij.psi.PsiElementFactory;
 import com.intellij.psi.PsiField;
 import com.intellij.psi.PsiJavaCodeReferenceElement;
 import com.intellij.psi.PsiMethod;
+import com.intellij.psi.PsiModifier;
 import com.intellij.psi.PsiParameter;
 import com.intellij.psi.PsiParameterList;
 import com.intellij.psi.PsiReferenceList;
@@ -77,7 +78,17 @@ public class CodeGenerator {
 
         // Creates all of the deserialization methods for the given fields
         for (PsiField field : fields) {
+            boolean isTransient = false;
+            if (field.getModifierList().hasModifierProperty(PsiModifier.TRANSIENT)) {
+                isTransient = true;
+            }
+            if (isTransient) {
+                sb.append("\n/*");
+            }
             sb.append(getSerializerForType(field).readValue(field, "in"));
+            if (isTransient) {
+                sb.append("*/\n");
+            }
         }
 
         sb.append("}");
