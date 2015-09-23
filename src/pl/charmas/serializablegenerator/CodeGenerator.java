@@ -128,8 +128,8 @@ public class CodeGenerator {
     private void removeExistingSerializableImplementation(PsiClass psiClass) {
         PsiField[] allFields = psiClass.getAllFields();
 
-        findAndRemoveMethod(psiClass, "describeContent");
-        findAndRemoveMethod(psiClass, "writeToParcel", TYPE_SERIALIZABLE, "int");
+        findAndRemoveMethod(psiClass, "readObject", TYPE_OIS);
+        findAndRemoveMethod(psiClass, "writeObject", TYPE_OOS);
     }
 
     private String generateDefaultConstructor(PsiClass clazz) {
