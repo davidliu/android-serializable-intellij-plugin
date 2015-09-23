@@ -51,6 +51,7 @@ public class CodeGenerator {
 
         this.mTypeSerializerFactory = new ChainSerializerFactory(
                 new DateSerializerFactory(),
+                new JSONObjectSerializerFactory(),
                 new EnumerationSerializerFactory(),
                 new PrimitiveTypeSerializerFactory(),
                 new PrimitiveArraySerializerFactory(),
