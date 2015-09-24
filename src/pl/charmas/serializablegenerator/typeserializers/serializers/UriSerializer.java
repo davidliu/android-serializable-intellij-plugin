@@ -17,8 +17,6 @@ package pl.charmas.serializablegenerator.typeserializers.serializers;
 
 import com.intellij.psi.PsiField;
 
-import org.apache.xmlbeans.impl.common.NameUtil;
-
 import pl.charmas.serializablegenerator.typeserializers.TypeSerializer;
 
 /**
@@ -26,7 +24,7 @@ import pl.charmas.serializablegenerator.typeserializers.TypeSerializer;
  *
  * @author Dallas Gutauckis [dallas@gutauckis.com]
  */
-public class JSONObjectSerializer implements TypeSerializer {
+public class UriSerializer implements TypeSerializer {
 
     @Override
     public String writeValue(PsiField field, String out) {
@@ -36,18 +34,6 @@ public class JSONObjectSerializer implements TypeSerializer {
 
     @Override
     public String readValue(PsiField field, String in) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("try {");
-        sb.append("    String %2$sStr = (String) %1$s.readObject();");
-        sb.append("    if (%2$sStr != null) {");
-        sb.append("        this.%2$s = new JSONObject(%2$sStr);");
-        sb.append("    } else {");
-        sb.append("        this.%2$s = null;");
-        sb.append("    }");
-        sb.append("} catch (JSONException e) {");
-        sb.append("     this.%2$s = null;");
-        sb.append("}");
-
-        return String.format(sb.toString(), in, field.getName());
+        return String.format("this.%2$s = Uri.parse((String) %1$s.readObject());", in, field.getName());
     }
 }

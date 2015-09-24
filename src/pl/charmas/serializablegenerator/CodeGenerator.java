@@ -53,6 +53,7 @@ public class CodeGenerator {
         this.mTypeSerializerFactory = new ChainSerializerFactory(
                 new DateSerializerFactory(),
                 new JSONObjectSerializerFactory(),
+                new UriSerializerFactory(),
                 new EnumerationSerializerFactory(),
                 new PrimitiveTypeSerializerFactory(),
                 new PrimitiveArraySerializerFactory(),
@@ -172,7 +173,7 @@ public class CodeGenerator {
         for (PsiClassType implementsListType : implementsListTypes) {
             PsiClass resolved = implementsListType.resolve();
 
-            // Already implements Parcelable, no need to add it
+            // Already implements Serializable, no need to add it
             if (resolved != null && implementsType.equals(resolved.getQualifiedName())) {
                 return;
             }
