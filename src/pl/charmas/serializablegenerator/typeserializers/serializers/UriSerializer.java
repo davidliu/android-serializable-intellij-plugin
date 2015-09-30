@@ -34,6 +34,9 @@ public class UriSerializer implements TypeSerializer {
 
     @Override
     public String readValue(PsiField field, String in) {
-        return String.format("this.%2$s = Uri.parse((String) %1$s.readObject());", in, field.getName());
+        StringBuilder sb = new StringBuilder();
+        sb.append("String %2$sStr = (String) %1$s.readObject();");
+        sb.append("this.%2$s = %2$sStr == null ? null : Uri.parse(%2$sStr);");
+        return String.format(sb.toString(), in, field.getName());
     }
 }
